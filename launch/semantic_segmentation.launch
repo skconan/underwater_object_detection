@@ -1,0 +1,7 @@
+<launch>
+<!-- args="semantic_segmentation" -->
+	<node pkg="object_detection" name="semantic_segmentation" type="semantic_segmentation.py"  output="screen">
+		<param name="camera_topic" type='str' value='/vision/front/image_rect_color/compressed'/>
+		<param name="model_file" type='str' value='/home/skconan/model/model-color-obj-bg.hdf5'/>
+	</node>
+</launch>

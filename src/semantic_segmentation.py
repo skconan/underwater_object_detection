@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
     File name: semantic_segmentation.py
     Author: skconan
@@ -11,9 +11,10 @@ import numpy as np
 from utilities import *
 import os
 from sensor_msgs.msg import CompressedImage
+from keras.models import load_model
 
-model_file = "/home/zeabus/catkin_ws/src/vision_ml/src/model-color-obj.hdf5"
-model = load_model(model_file)
+
+model = None
 image = None
 
 
@@ -25,7 +26,7 @@ def image_callback(msg):
 
 def semantic_segmentation():
     global image
-    r = rospy.Rate(10)
+    r = rospy.Rate(8)
 
     while image is None:
         print("image is none")
@@ -52,7 +53,16 @@ def semantic_segmentation():
 
 
 if __name__=='__main__':
-    topic_name = "/vision/front/image_rect_color/compressed"
-    rospy.init_node('semantic_segmentation')
-    rospy.Subscriber(topic_name, CompressedImage, image_callback)
+    camera_topic_default = "/vision/front/image_rect_color/compressed"
+    model_file_default = "/home/skconan/model/model-color-obj-bg.hdf5"
+
+
+    camera_topic = rospy.get_param(
+        "/semantic_segmentation/camera_topic", camera_topic_default)
+    model_file = rospy.get_param(
+        "/semantic_segmentation/model_file", model_file_default)
+    
+    model = load_model(model_file)
+    rospy.init_node('semantic_segmentation', anonymous=False)
+    rospy.Subscriber(camera_topic, CompressedImage, image_callback)
     semantic_segmentation()
