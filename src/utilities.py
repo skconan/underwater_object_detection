@@ -81,7 +81,7 @@ def get_kernel(shape='rect', ksize=(3, 3)):
         return None
 
 
-def publish_result(img, type, topic_name):
+def publish_result(img, topic_name):
     """
         publish picture
     """
@@ -91,7 +91,7 @@ def publish_result(img, type, topic_name):
         type = "gray"
 
     pub = rospy.Publisher(
-        str(topic_name)+"/compressed", CompressedImage, queue_size=10)
+        str(topic_name)+"/compressed", CompressedImage, queue_size=1)
     
     msg = CompressedImage()
     msg.header.stamp = rospy.Time.now()
