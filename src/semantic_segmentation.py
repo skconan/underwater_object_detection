@@ -18,15 +18,15 @@ model = None
 image = None
 
 
-
 def image_callback(msg):
     global image
     arr = np.fromstring(msg.data, np.uint8)
     image = cv.imdecode(arr, 1)
 
 def semantic_segmentation():
-    global image
-    r = rospy.Rate(8)
+    global image, model
+
+    r = rospy.Rate(7)
 
     while image is None:
         print("image is none")
@@ -45,6 +45,7 @@ def semantic_segmentation():
         pred = model.predict(frame)[0]
         
         pred = cv.resize(pred.copy(), (484,304))
+        # pred = cv.resize(pred.copy(), (484,304))
         pred = pred * 255.
         pred = pred.astype('uint8')
 
