@@ -91,7 +91,7 @@ def publish_result(img, type, topic_name):
         type = "gray"
 
     pub = rospy.Publisher(
-        str(topic_name), CompressedImage, queue_size=10)
+        str(topic_name)+"/compressed", CompressedImage, queue_size=10)
     
     msg = CompressedImage()
     msg.header.stamp = rospy.Time.now()
