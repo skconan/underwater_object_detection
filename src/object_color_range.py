@@ -140,8 +140,8 @@ class window:
         for name in self.lower:
             if(name == 'mask'):
                 continue
-            tmp += " " +  name + ": " + "\n" + "  " + "upper:" + self.range_list2str(self.upper[name][-1]) + "'\n" +\
-                "  " + "lower:" + self.range_list2str(self.lower[name][-1]) + "'\n\n"
+            tmp += " " +  name + ": " + "\n" + "  " + "upper: '" + self.range_list2str(self.upper[name][-1]) + "'\n" +\
+                "  " + "lower: '" + self.range_list2str(self.lower[name][-1]) + "'\n\n"
         return tmp
 
 def nothing(what):
