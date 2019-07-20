@@ -8,9 +8,10 @@ project(object_detection)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-    message_generation
+    rospy
     sensor_msgs
-    object_detection
+    std_msgs
+    message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -49,16 +50,16 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  obj_detection.msg
+  obj_detection_msg.msg
 
 )
 
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
-  obj_detection.srv
+  obj_detection_srv.srv
 )
-
+#
 ## Generate actions in the 'action' folder
 # add_action_files(
 #   FILES
@@ -67,10 +68,10 @@ add_service_files(
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+generate_messages(
+   DEPENDENCIES
+   sensor_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -106,6 +107,7 @@ catkin_package(
 #  LIBRARIES object_detection
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
+CATKIN_DEPENDS message_runtime 
 )
 
 ###########
