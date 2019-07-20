@@ -5,6 +5,7 @@
     Date created: 2019/07/20
     Python Version: 2.7
 """
+
 import rospy
 import cv2 as cv
 import numpy as np
@@ -66,7 +67,9 @@ def semantic_segmentation():
 
         # time_duration = rospy.Time.now()-start_time
         # print(time_duration.to_sec())
-        publish_result(pred, "bgr", "semantic_segmentation")
+        publish_result(pred, "semantic_segmentation")
+        time_duration = rospy.Time.now()-start_time
+        print(time_duration.to_sec())
         r.sleep()
 
 
