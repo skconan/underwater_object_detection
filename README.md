@@ -15,3 +15,4 @@
       - Use `neg` when background has intensity higher than foreground (object).
       - Use `pos` in otherwise.
     
+    - `bg_k` and `fg_k` is number of color of result image.
