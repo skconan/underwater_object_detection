@@ -34,7 +34,7 @@ def semantic_segmentation():
         continue
     
     while not rospy.is_shutdown():
-        # start = time.time()
+        # start_time = rospy.Time.now()
         frame = image.copy()
 
         frame = cv.cvtColor(frame.copy(), cv.COLOR_BGR2RGB)
@@ -47,7 +47,8 @@ def semantic_segmentation():
         pred = pred * 255.
         pred = pred.astype('uint8')
 
-        # print("Time",time.time()-start)
+        # time_duration = rospy.Time.now()-start_time
+        # print(time_duration.to_sec())
         publish_result(pred, "bgr", "semantic_segmentation")
         r.sleep()
 
