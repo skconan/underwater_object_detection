@@ -17,6 +17,10 @@
  
 ### Semantic Segmentation
 
+* Files:
+    - [semantic_segmentation.py](https://github.com/skconan/underwater_object_detection/blob/master/src/semantic_segmentation.py)
+    - [semantic_segmentation.launch](https://github.com/skconan/underwater_object_detection/blob/master/launch/semantic_segmentation.launch)
+
 * Execution
     - roslaunch object_detection semantic_segmentation.launch
 
