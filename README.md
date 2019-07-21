@@ -55,9 +55,9 @@
 
 ### Object Detection
 
-* Before use this program, you need to done in [Color Range Selection](color-range-selection) part.
-* In [object_detection_front.py]()
-    - This node is `server` node. It has service name is `object_detection_front`
+* Before use this program, you need to done in [Color Range Selection](#color-range-selection) part.
+* In [object_detection_front.py](https://github.com/skconan/underwater_object_detection/blob/master/src/object_detection_front.py)
+    - This file is a `server` node. It has service name is `object_detection_front`
     - Example of client call this server [see this](https://github.com/skconan/underwater_object_detection/blob/master/src/call_obj_detection.py) 
     - The result of service 
         - return `appear` > True or False that mean appear or disappear
