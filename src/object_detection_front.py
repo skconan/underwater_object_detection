@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 """
-    File name: object_detection.py
+    File name: object_detection_front.py
     Author: skconan
     Date created: 2019/07/20
     Python Version: 2.7
 """
+
 import rospy
 import cv2 as cv
 import numpy as np
@@ -13,6 +14,7 @@ import os
 from sensor_msgs.msg import CompressedImage
 from object_detection.srv import obj_detection_srv
 from object_detection.msg import obj_detection_msg
+from operator import itemgetter
 
 image = None
 
@@ -46,11 +48,45 @@ def image_callback(msg):
 
 def object_detection(obj_name):
     global image, model
-    print("pass")
+    
+    area_min = 500
+
     lower = rospy.get_param("/object_detection/object_color_range/"+ obj_name +"/lower")
     upper = rospy.get_param("/object_detection/object_color_range/"+ obj_name +"/upper")
+
+    lower = range_str2list(lower)
+    upper = range_str2list(upper)
     print(lower,upper)
-    return return_null()    
+    
+    hsv = cv.cvtColor(image, cv.COLOR_BGR2HSV)
+    lower = np.array(lower,np.uint8)
+    upper = np.array(upper,np.uint8)
+    mask = cv.inRange(hsv, lower, upper)
+
+    _, mask = cv.threshold(mask, 127, 255, cv.THRESH_BINARY)
+    mask = cv.erode(mask,get_kernel())
+    mask = cv.dilate(mask,get_kernel())
+
+    pose = []
+    
+    if int((cv.__version__).split(".")[0]) < 4:
+        _, contours, _ = cv.findContours(mask, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+    else:
+        contours, _ = cv.findContours(mask, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+
+    for cnt in contours:
+        area = cv.contourArea(cnt)
+        if area < area_min:
+            continue
+        x, y, w, h = np.int0(cv.boundingRect(cnt))
+        pose.append([x, y, area])
+
+    if len(pose) > 0:
+        # pose = sorted(pose, key=itemgetter(2), reverse=True)
+        # pose = pose[0]
+        return return_result(mask)
+    else:
+        return return_null()    
     
 
 if __name__=='__main__':
