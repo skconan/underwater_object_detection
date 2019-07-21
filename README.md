@@ -1,6 +1,15 @@
-# underwater_object_detection
+# Underwater Object Detection
 
 ## Usage
+
+### Overview and Setup
+
+* This repo have code for 2 machines. Please clone this repo to`JetsonTX2` and `Nuc Intel`
+* In JetsonTX2
+    - Run `semantic_segmentation
+* In NucIntel 
+    - Run **[Color Range Selection](#color-range-selection)**
+    - Run **[Object Detection](#object-detection)**
 
 ### Background Subtraction with Kmean
 
@@ -23,6 +32,7 @@
  * Files:
     - [object_color_range.py](https://github.com/skconan/underwater_object_detection/blob/master/src/object_color_range.py)
     - [object_color_range.launch](https://github.com/skconan/underwater_object_detection/blob/master/launch/object_color_range.launch)
+    - [constants.py](https://github.com/skconan/underwater_object_detection/blob/master/src/constants.py) - Insert mission in mission list. (The first letter must be unique letter. cannot use z,x,s,c,q)
     
  * Execution
     - roslaunch object_detection object_color_range.launch
@@ -42,3 +52,14 @@
     - `press s` save
     - `press c` clear color value (lower: 179, 255, 255 and upper: 0, 0, 0) 
     - `press q`	exit program. if not save cannot exit but you can `Ctrl+C` in termnal for exit.
+
+### Object Detection
+
+* Before use this program, you need to done in [Color Range Selection](color-range-selection) part.
+* In [object_detection_front.py]()
+    - This node is `server` node. It has service name is `object_detection_front`
+    - Example of client call this server [see this](https://github.com/skconan/underwater_object_detection/blob/master/src/call_obj_detection.py) 
+    - The result of service 
+        - return `appear` > True or False that mean appear or disappear
+        - return `mask`  > Binary image if appear is True. 
+        - 
