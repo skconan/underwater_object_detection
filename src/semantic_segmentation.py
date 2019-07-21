@@ -8,26 +8,11 @@
 import rospy
 import cv2 as cv
 import numpy as np
+import tensorflow as tf
 from utilities import *
 import os
 from sensor_msgs.msg import CompressedImage
 from keras.models import load_model
-## extra imports to set GPU options
-import tensorflow as tf
-from keras import backend as k
- 
-###################################
-# TensorFlow wizardry
-config = tf.ConfigProto()
- 
-# Don't pre-allocate memory; allocate as-needed
-config.gpu_options.allow_growth = True
- 
-# Only allow a total of half the GPU memory to be allocated
-config.gpu_options.per_process_gpu_memory_fraction = 0.5
- 
-# Create a session with the above options specified.
-k.tensorflow_backend.set_session(tf.Session(config=config))
 
 model = None
 image = None
@@ -41,7 +26,7 @@ def image_callback(msg):
 def semantic_segmentation():
     global image, model
 
-    r = rospy.Rate(7)
+    r = rospy.Rate(15)
 
     while image is None:
         print("image is none")
@@ -49,7 +34,7 @@ def semantic_segmentation():
         continue
     
     while not rospy.is_shutdown():
-        # start_time = rospy.Time.now()
+        start_time = rospy.Time.now()
         frame = image.copy()
 
         frame = cv.cvtColor(frame.copy(), cv.COLOR_BGR2RGB)
@@ -64,8 +49,8 @@ def semantic_segmentation():
         pred = pred * 255.
         pred = pred.astype('uint8')
 
-        # time_duration = rospy.Time.now()-start_time
-        # print(time_duration.to_sec())
+        time_duration = rospy.Time.now()-start_time
+        print(time_duration.to_sec())
         publish_result(pred, "bgr", "semantic_segmentation")
         r.sleep()
 
