@@ -18,7 +18,7 @@
     - `bg_k` and `fg_k` is number of color of result image.
     
  
- ### Object Color Range Selection
+ ### Color Range Selection
  
  * Files:
     - [object_color_range.py](https://github.com/skconan/underwater_object_detection/blob/master/src/object_color_range.py)
