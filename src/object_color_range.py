@@ -13,7 +13,7 @@ hsv = None
 wait = False
 click = False
 number = None
-mission = None
+
 is_mask = False
 sub_sampling = 0.5
 camera_position = None
@@ -25,7 +25,7 @@ pixel['x'], pixel['y'] = -1, -1
 
 
 class window:
-    global screen_width, screen_height, hsv, camera_position, mission, number
+    global screen_width, screen_height, hsv, number
 
     def __init__(self):
         self.size = 250
@@ -148,7 +148,7 @@ def nothing(what):
     pass
 
 def image_callback(msg):
-    global img, wait, hsv, image_width, image_height, mission, camera_position, sub_sampling
+    global img, wait, hsv, image_width, image_height, sub_sampling
     if wait:
         return
     arr = np.fromstring(msg.data, np.uint8)
@@ -285,7 +285,7 @@ def select_color():
         w.show_image(window_name)
         cv.circle(hsv, (int(x), int(y)), 5, (100, 255, 255), -1)
         cv.imshow('image', hsv)
-        cv.imshow('imageBGR', img)
+        cv.imshow('image_bgr', img)
         click = False
         status = False
     cv.destroyAllWindows()
