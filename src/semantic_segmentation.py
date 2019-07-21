@@ -45,7 +45,8 @@ def semantic_segmentation():
         frame = (frame / 255.)
         pred = model.predict(frame)[0]
         
-        pred = cv.resize(pred.copy(), (484,304))
+        pred = cv.resize(pred.copy(), (484,304))	
+	pred = cv.cvtColor(pred.copy(), cv.COLOR_RGB2BGR)
         # pred = cv.resize(pred.copy(), (484,304))
         pred = pred * 255.
         pred = pred.astype('uint8')
@@ -65,9 +66,9 @@ if __name__=='__main__':
 
 
     camera_topic = rospy.get_param(
-        "/object_detection/camera_topic", camera_topic_default)
+        "/semantic_segmentation/camera_topic", camera_topic_default)
     model_file = rospy.get_param(
-        "/object_detection/model_file", model_file_default)
+        "/semantic_segmentation/model_file", model_file_default)
     
     model = load_model(model_file)
     rospy.init_node('semantic_segmentation', anonymous=False)
