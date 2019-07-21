@@ -17,8 +17,14 @@
  
 ### Semantic Segmentation
 
-* 
+* Execution
+    - roslaunch object_detection semantic_segmentation.launch
 
+* Structure Node
+    - Subscribe
+        - camera_topic/compressed
+    - Server (service name)
+        - /semantic_segmentation/compressed
 
 ### Color Range Selection
  
@@ -30,6 +36,10 @@
  * Execution
     - roslaunch object_detection object_color_range.launch
     - Press `y` or `Y`
+ 
+ * Structure Node
+    - Subscribe
+        - /semantic_segmentation/compressed
  
  * In program
     - In the `image` window display HSV image.
