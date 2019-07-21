@@ -19,6 +19,7 @@ from operator import itemgetter
 image = None
 
 def return_null():
+    print("return null")
     msg = obj_detection_msg()
     msg.appear = False
 
@@ -36,9 +37,11 @@ def return_result(img):
     img_msg.format = "jpeg"
     img_msg.data = np.array(cv.imencode('.jpg', img)[1]).tostring()
     msg.mask = img_msg
+    return msg
 
 def object_detection_callback(msg):
     obj_name = msg.obj
+    print(obj_name)
     return object_detection(obj_name)
 
 def image_callback(msg):
@@ -49,6 +52,9 @@ def image_callback(msg):
 def object_detection(obj_name):
     global image, model
     
+    if image is None:
+        print("image is None")
+        return return_null()
     area_min = 500
 
     lower = rospy.get_param("/object_detection/object_color_range/"+ obj_name +"/lower")
@@ -74,13 +80,15 @@ def object_detection(obj_name):
     else:
         contours, _ = cv.findContours(mask, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
 
+    print(len(contours))
+
     for cnt in contours:
         area = cv.contourArea(cnt)
         if area < area_min:
             continue
         x, y, w, h = np.int0(cv.boundingRect(cnt))
         pose.append([x, y, area])
-
+    print(len(pose))
     if len(pose) > 0:
         # pose = sorted(pose, key=itemgetter(2), reverse=True)
         # pose = pose[0]
