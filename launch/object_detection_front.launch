@@ -1,6 +1,6 @@
 <launch>
-	<rosparam ns="object_color" command="load" file="$(find object_detection)/params/object_color.yaml"></rosparam>
-	<node pkg="object_detection" name="object_color" type="object_detection.py" args="object_color" output="screen">
+	<rosparam ns="object_detection" command="load" file="$(find object_detection)/params/object_color_range.yaml"></rosparam>
+	<node pkg="object_detection" name="object_detection" type="object_detection_front.py" args="object_detection" output="screen">
 		<param name="segmentation_topic" type='str' value='/semantic_segmentation/compressed'/>
 	</node>
 </launch>
