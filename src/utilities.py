@@ -19,6 +19,9 @@ import rospy
 colorama.init()
 DEBUG = True
 
+def range_str2list(str):
+    str = str.split(',')
+    return [int(str[0]), int(str[1]), int(str[2])]
 
 def print_debug(*args, **kwargs):
     global DEBUG
