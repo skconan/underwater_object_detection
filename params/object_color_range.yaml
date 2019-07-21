@@ -1,0 +1,9 @@
+object_color_range:
+ gate: 
+  upper: '179,0,114'
+  lower: '0,0,0'
+
+ buoy: 
+  upper: '179,80,236'
+  lower: '70,0,0'
+
