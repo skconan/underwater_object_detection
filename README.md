@@ -5,34 +5,27 @@
 ### Overview and Setup
 
 * This repo have code for 2 machines. Please clone this repo to`JetsonTX2` and `Nuc Intel`
+
 * In JetsonTX2
-    - Run `semantic_segmentation
+    - Run **[Semantic Segmentation](#semantic-segmentation)**
+
 * In NucIntel 
     - Run **[Color Range Selection](#color-range-selection)**
     - Run **[Object Detection](#object-detection)**
+    - Run **[Background Subtraction with Kmean](#background-subtraction-with-kmean)**
 
-### Background Subtraction with Kmean
-
-* File: [bg_sub_by_kmean.py](https://github.com/skconan/underwater_object_detection/blob/master/src/bg_sub_by_kmean.py)
-
-* File description :
-    - Find `max_iter` variable. The variable is maximum number of iterations of algorithm.
-      - If increase `max_iter` the accuracy is increase but spend more time.
-      - If decrease `max_iter` is opposite above case.
-    
-    - Find parameter `mode` of bg_subtraction()
-      - Use `neg` when background has intensity higher than foreground (object).
-      - Use `pos` in otherwise.
-    
-    - `bg_k` and `fg_k` is number of color of result image.
-    
  
- ### Color Range Selection
+### Semantic Segmentation
+
+* 
+
+
+### Color Range Selection
  
  * Files:
     - [object_color_range.py](https://github.com/skconan/underwater_object_detection/blob/master/src/object_color_range.py)
     - [object_color_range.launch](https://github.com/skconan/underwater_object_detection/blob/master/launch/object_color_range.launch)
-    - [constants.py](https://github.com/skconan/underwater_object_detection/blob/master/src/constants.py) - Insert mission in mission list. (The first letter must be unique letter. cannot use z,x,s,c,q)
+    - [constants.py](https://github.com/skconan/underwater_object_detection/blob/master/src/constants.py) - Insert mission to mission list varaible. (The first letter must be unique letter. cannot use z,x,s,c,q)
     
  * Execution
     - roslaunch object_detection object_color_range.launch
@@ -62,4 +55,27 @@
     - The result of service 
         - return `appear` > True or False that mean appear or disappear
         - return `mask`  > Binary image if appear is True. 
-        - 
+* Execution
+    - roslaunch object_detection object_detection_front.launch
+
+* Structure Node
+    - Subscribe
+        - /semantic_segmentation/compressed
+    - Server (service name)
+        - /object_detection_front
+
+### Background Subtraction with Kmean
+
+* File: [bg_sub_by_kmean.py](https://github.com/skconan/underwater_object_detection/blob/master/src/bg_sub_by_kmean.py)
+
+* File description :
+    - Find `max_iter` variable. The variable is maximum number of iterations of algorithm.
+      - If increase `max_iter` the accuracy is increase but spend more time.
+      - If decrease `max_iter` is opposite above case.
+    
+    - Find parameter `mode` of bg_subtraction()
+      - Use `neg` when background has intensity higher than foreground (object).
+      - Use `pos` in otherwise.
+    
+    - `bg_k` and `fg_k` is number of color of result image.
+    
