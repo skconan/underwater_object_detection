@@ -128,7 +128,7 @@ class window:
             rospy.set_param(
                 'object_detection/object_color_range/' + name +"/upper", self.range_list2str(self.upper[name][-1]))
 
-        f = open(self.path + '/params/object_color.yaml', 'w')
+        f = open(self.path + '/params/object_color_range.yaml', 'w')
         x = self.genyaml()
         f.write(x)
         f.close()
@@ -136,7 +136,7 @@ class window:
         print_result('save')
 
     def genyaml(self):
-        tmp = "object_detection:\n"
+        tmp = "object_color_range:\n"
         for name in self.lower:
             if(name == 'mask'):
                 continue
